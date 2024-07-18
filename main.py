@@ -22,14 +22,16 @@ def E3_compliance(w2h, box):
         show_box(box, plt.gca())
 
 
-def E2_compliance(facade_area, window_area):
+def E2_compliance(facade_area, window_area, box):
 
     if facade_area > 0:
         ratio = (facade_area / (window_area + facade_area)) * 100
         if 40 <= ratio <= 60:
-            print(f"The facade area is within 40% to 60% of overall facade area: {ratio:.2f}%")
+            # print(f"The facade area is within 40% to 60% of overall facade area: {ratio:.2f}%")
+            pass
         else:
-            print(f"The facade area is not within the desired range: {ratio:.2f}%")
+            # print(f"The facade area is not within the desired range: {ratio:.2f}%")
+            show_box(box, plt.gca())
     else:
         print("No masks found for facade")
 
@@ -78,6 +80,7 @@ def main():
         if detection_class == 2:
             color = 'red'
             facade_area += mask_area
+            f_box = box
         elif detection_class == 9:
             color = 'blue'
             window_area += mask_area
@@ -90,7 +93,7 @@ def main():
                 width_to_height_ratio = w / h
                 E3_compliance(width_to_height_ratio, box)
 
-    E2_compliance(facade_area, window_area)
+    E2_compliance(facade_area, window_area, f_box)
 
     plt.axis('off')
     plt.show()
