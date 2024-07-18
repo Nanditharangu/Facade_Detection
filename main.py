@@ -35,9 +35,10 @@ def E2_compliance(facade_area, window_area, box):
     else:
         print("No masks found for facade")
 
-def main():
+def main(file):
 
-    IMAGE_PATH = 'src/data/evaluation/543.jpeg'
+    # IMAGE_PATH = 'src/data/evaluation/543.jpeg'
+    IMAGE_PATH = file
     YOLO_PATH = 'src/models/best.pt'
     SAM_PATH = "src/models/sam_vit_h_4b8939.pth"
     SAM_MODEL_TYPE = "vit_h"
@@ -96,7 +97,8 @@ def main():
     E2_compliance(facade_area, window_area, f_box)
 
     plt.axis('off')
-    plt.show()
+    #plt.show()
 
+    filename = file.split("/")[-1]
+    plt.savefig(f'results/{filename}')
 
-main()

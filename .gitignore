@@ -1,2 +1,6 @@
 .DS_Store
 src/
+__pycache__
+images/
+results/
+facdec/

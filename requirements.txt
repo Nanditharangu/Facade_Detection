@@ -3,3 +3,5 @@ numpy
 matplotlib
 ultralytics
 segment-anything
+fastapi
+uvicorn
