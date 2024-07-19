@@ -35,8 +35,8 @@ def main(file):
     # IMAGE_PATH = 'src/data/evaluation/543.jpeg'
     IMAGE_PATH = file
     YOLO_PATH = 'src/models/best.pt'
-    SAM_PATH = "src/models/sam_vit_h_4b8939.pth"
-    SAM_MODEL_TYPE = "vit_h"
+    SAM_PATH = "src/models/sam_vit_b_01ec64.pth"
+    SAM_MODEL_TYPE = "vit_b"
     yolo_model = YOLO(YOLO_PATH)
     sam = sam_model_registry[SAM_MODEL_TYPE](checkpoint=SAM_PATH)
     sam_model = SamPredictor(sam)
