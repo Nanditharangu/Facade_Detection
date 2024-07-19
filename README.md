@@ -64,7 +64,7 @@ Upload an Image and click Execute
 
 ## Demo Video
 
-https://github.com/user-attachments/assets/3f0e4a66-0b7e-4f5b-a309-8aceaaf5fa7f
+https://github.com/user-attachments/assets/fb651ff4-371a-4ad8-b7ec-67deaa052383
 
 ## Sample results
 
