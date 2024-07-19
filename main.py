@@ -2,38 +2,33 @@ import cv2
 import numpy as np
 import ultralytics
 from ultralytics import YOLO
-from segment_anything import sam_model_registry, SamAutomaticMaskGenerator, SamPredictor
+from segment_anything import sam_model_registry, SamPredictor
 import matplotlib.pyplot as plt
 ultralytics.checks()
 
-def show_box(box, ax):
+def show_box(box, ax, label):
 
     x0, y0 = box[0], box[1]
     w, h = box[2] - box[0], box[3] - box[1]
-    ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='green', facecolor=(0,0,0,0), lw=2))
+    ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='red', facecolor=(0,0,0,0), lw=2))
+    ax.text(x0, y0 - 5, label, color='purple', fontsize=12, verticalalignment='top')
 
 def E3_compliance(w2h, box):
 
-    if 1/3 <= w2h <= 1/2:
-        # print(f"Window is vertically rectangular with width-to-height ratio: {w2h:.2f}")
-        pass
-    else:
-        # print(f"window does not meet the width-to-height ratio requirement: {w2h:.2f}")
-        show_box(box, plt.gca())
+    if not 1/3 <= w2h <= 1/2 and w2h < 1:
+        show_box(box, plt.gca(), f'width to height ratio: {w2h:.2f}')
+    elif w2h > 1:
+        show_box(box, plt.gca(), 'Not vertically rectangular')
 
 
 def E2_compliance(facade_area, window_area, box):
 
     if facade_area > 0:
         ratio = (facade_area / (window_area + facade_area)) * 100
-        if 40 <= ratio <= 60:
-            # print(f"The facade area is within 40% to 60% of overall facade area: {ratio:.2f}%")
-            pass
-        else:
-            # print(f"The facade area is not within the desired range: {ratio:.2f}%")
-            show_box(box, plt.gca())
+        if not 40 <= ratio <= 60:
+            show_box(box, plt.gca(), f'The facade area is not within 40% to 60% of overall facade area. Its {ratio:.2f}%')
     else:
-        print("No masks found for facade")
+        pass
 
 def main(file):
 
@@ -46,7 +41,7 @@ def main(file):
     sam = sam_model_registry[SAM_MODEL_TYPE](checkpoint=SAM_PATH)
     sam_model = SamPredictor(sam)
 
-    objects = yolo_model.predict(source = IMAGE_PATH, classes = [2, 9], conf = 0.4)
+    objects = yolo_model.predict(source = IMAGE_PATH, classes = [2, 9])
     image = cv2.cvtColor(cv2.imread(IMAGE_PATH), cv2.COLOR_BGR2RGB)
     sam_model.set_image(image)
 
@@ -94,7 +89,10 @@ def main(file):
                 width_to_height_ratio = w / h
                 E3_compliance(width_to_height_ratio, box)
 
-    E2_compliance(facade_area, window_area, f_box)
+    try:
+        E2_compliance(facade_area, window_area, f_box)
+    except:
+        pass
 
     plt.axis('off')
     #plt.show()
