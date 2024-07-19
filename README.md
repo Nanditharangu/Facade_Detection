@@ -45,7 +45,7 @@ Upload an Image and click Execute
 Ultralytics YOLO model has been fine-tuned on [building-facade-segmentation-instance Computer Vision Project](https://universe.roboflow.com/building-facade/building-facade-segmentation-instance) dataset.
 
 Training script [here](https://drive.google.com/file/d/1ic9YkDPTS5oWLhD-kW_DdXhjb4Gd4aLU/view?usp=sharing)
-## Inference through Docker
+# Inference through Docker
 
 ### pull docker image
 
@@ -73,6 +73,11 @@ https://github.com/user-attachments/assets/fb651ff4-371a-4ad8-b7ec-67deaa052383
 
 ![im2](https://github.com/Nanditharangu/Facade_Detection/blob/main/samples/2bf555eb-15d4-43c2-b9ae-7895f43d309a.jpg?raw=True)
 
+## Note
+This may not be the optimal solution for the given problem. The model performance can be further optimzed by:
+1) TensorRT can be used for Inference optimization (Due to the inaccessibility to GPU, the inference is running on the CPU)
+2) To increase the inference speeds smallest version of SAM vit-b is used, eventhough the larger version vit-h generated precise masks. With proper speed optimization, SAM vit-h can be used.
+3) Running 2 models one after the other decreased the inference speed further. The better way would be to train a single model (YOLOv8) to perform both Detection and segmentation. Due to resource limitations(not many models/datasets for windows and facades) this approached was opted.
 
 
 
