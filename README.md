@@ -1,24 +1,33 @@
-# Facade_Detection
 
-files:
-1) main.py
-2) Colab notebook
-3) requirements.txt
-4) dockerfile
-5) gitignore
-functions in main: 
-1) detections
-2) segment
-3) math check
-4) visualization
-folders:
-1) Weights
-2) Images
+# Facade Detection and Segmentation
 
 
-train YOLO
 
-virtualenv -p /usr/bin/python3 facdec
-source facdec/bin/activate 
-pip install --upgrade pip
-pip install -r requirements.txt
+## Workflow
+
+![App Screenshot](https://github.com/Nanditharangu/Facade_Detection/blob/main/samples/IMG_9908.jpg?raw=true)
+
+
+## Inference
+
+### Environment setup
+
+```bash
+  virtualenv -p /usr/bin/python3 fac_det
+  source fac_det/bin/activate
+  pip install -r requirements.txt
+```
+### Download the model weights
+
+[Yolo model](https://linktodocumentation)
+
+[SAM model](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
+
+### Run the app
+```bash
+uvicorn app:app --reload  
+```
+A http link will be displayed on the terminal. Open the link in a browser with /docs. 
+
+Upload an Image and click Execute
+    
